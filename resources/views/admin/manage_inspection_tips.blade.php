@@ -4,21 +4,23 @@
     @include('admin.css')
     <style>
       .table thead th {
-        border: 1px solid #dee2e6;
-        background-color: #70707070;
+        border: 1px solid #000000ff;
+        border-bottom: 2px solid #000000ff;
+        background-color: #ffffffe1;
         font-weight: 600;
         vertical-align: middle;
         text-align: center;
         padding: 0.75rem;
         font-size: 0.95rem;
-        color: #ffffffff;
+        color: #000000ff;
       }
       .table tbody td {
-        border: 1px solid #dee2e6;
+        border: 1px solid #000000ff;
+        background-color: #ffffffe1;
         vertical-align: middle;
         padding: 0.75rem;
         font-size: 0.95rem;
-        color: #ffffffff;
+        color: #000000ff;
         text-align: center;
     }
       .table img {
@@ -49,10 +51,10 @@
     <div class="page-content">
       <div class="container-fluid py-4">
         <h2 class="h5 mb-4">Manage Inspection Tips</h2>
-        <div class="card">
-          <div class="card-body">
+        <div class="card" style="border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <div class="card-body" style="padding: 1.5rem;">
             <div class="table-responsive">
-              <table class="table table-bordered table-hover align-middle mb-0">
+              <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 0.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <thead>
                   <tr class="text-center" style="border-bottom: 2px solid #dee2e6;">
                     <th style="width:60px;">No</th>

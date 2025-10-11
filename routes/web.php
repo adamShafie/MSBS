@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TipsController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ProfileController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 //LoginController
 route::get('/', [LoginController::class, 'home']);
@@ -10,6 +13,10 @@ route::get('/', [LoginController::class, 'home']);
 route::get('/home', [LoginController::class, 'index']) ->name('home');
 
 route::get('/logout', [LoginController::class, 'logout']) ->name('logout');
+
+route::get('/user_profile', [ProfileController::class, 'view_profile']) ->name('view_profile');
+
+route::post('/edit_profile/{id}', [ProfileController::class, 'edit_profile']) ->name('edit_profile');
 
 
 //TipsController
@@ -26,3 +33,6 @@ route::post('/update_inspection_tips/{id}', [TipsController::class, 'update_insp
 route::get('/delete_inspection_tips/{id}', [TipsController::class, 'delete_inspection_tips']) ->name('delete_inspection_tips');
 
 route::get('/inspection_tips_details/{id}', [TipsController::class, 'inspection_tips_details']) ->name('inspection_tips_details');
+
+//BookingController
+route::get('/service_booking', [BookingController::class, 'service_booking']) ->name('service_booking');

@@ -13,9 +13,9 @@ class LoginController extends Controller
     {
         if (Auth::id()) {
             $user = User::find(Auth::id());
-            if ($user->usertype == 'admin') {
+            if ($user->role == 'admin') {
                 return view('admin.home');
-            } else if ($user->usertype == 'workshop_owner') {
+            } else if ($user->role == 'workshop_owner') {
                 return view('workshop_owner.home');
             }
             else {

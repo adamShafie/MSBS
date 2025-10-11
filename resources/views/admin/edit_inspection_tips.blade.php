@@ -5,16 +5,21 @@
     @include('admin.css')
     <style>
       .card {
+        border: none;
+        background-color: white;
         border-radius: 1rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       }
-      .card-header {
-        background: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
-        border-radius: 1rem 1rem 0 0;
-      }
       .form-label {
-        font-weight: 500;
+        font-size: 0.95rem;
+        color: #000;
+        font-weight: 550;
+      }
+      .form-control {
+        border: 1px solid #000000ff;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        color: #000;
       }
       .form-control:focus {
         box-shadow: 0 0 0 0.2rem rgba(0,123,255,.1);
@@ -35,12 +40,10 @@
 
     <div class="page-content">
       <div class="container-fluid py-4">
+        <h2 class="h5 mb-4">Edit Inspection Tip</h2>
         <div class="row justify-content-center">
           <div class="col-lg-7 col-md-9">
             <div class="card">
-              <div class="card-header">
-                <h2 class="h5 mb-0">Edit Inspection Tip</h2>
-              </div>
               <div class="card-body">
                 <form action="{{url('update_inspection_tips', $tip->id)}}" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
                   @csrf
@@ -56,12 +59,12 @@
                   </div>
                 <div class="mb-4">
                     <label class="form-label" for="thumbnail">Current Image</label>
-                    <img src="/thumbnails/{{$tip->thumbnail}}" alt="Current Image" style="display: block; max-width: 200px; margin-top: 10px;">
+                    <img src="/thumbnails/{{$tip->thumbnail}}" alt="Current Image" style="display: block; max-width: 200px; margin-top: 10px; border:#000000ff 1px solid; border-radius: 0.5rem;">
                     <div class="invalid-feedback">Please upload an image.</div>
                   </div>
                   <div class="mb-4">
                     <label class="form-label" for="thumbnail">Upload Image</label>
-                    <input type="file" name="thumbnail" id="thumbnail" class="form-control">
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control" style="border: none;">
                   </div>
                   <div class="d-grid">
                     <button type="submit" class="btn btn-primary btn-block"><b>Edit Tip</b></button>
