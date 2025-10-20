@@ -1,7 +1,8 @@
 <div class="page-content">
     <div class="page-header">
         <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Welcome, Workshop Owner</h2>
+            <h2 class="h5 no-margin-bottom">Welcome to MSBS</h2>
         </div>
     </div>
 </div>
+

@@ -14,9 +14,32 @@ route::get('/home', [LoginController::class, 'index']) ->name('home');
 
 route::get('/logout', [LoginController::class, 'logout']) ->name('logout');
 
-route::get('/user_profile', [ProfileController::class, 'view_profile']) ->name('view_profile');
 
-route::post('/edit_profile/{id}', [ProfileController::class, 'edit_profile']) ->name('edit_profile');
+
+//ProfileController
+route::get('/user_details', [ProfileController::class, 'view_profile']) ->name('view_profile');
+
+route::get('/edit_profile/{id}', [ProfileController::class, 'edit_profile']) ->name('edit_profile');
+
+route::post('/update_profile/{id}', [ProfileController::class, 'update_profile']) ->name('update_profile');
+
+route::get('/delete_profile/{id}', [ProfileController::class, 'delete_profile']) ->name('delete_profile');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/motorcycle_details', [ProfileController::class, 'view_motorcycle'])->name('view_motorcycle');
+});
+
+route::get('/edit_motorcycle/{id}', [ProfileController::class, 'edit_motorcycle']) ->name('edit_motorcycle');
+
+route::post('/update_motorcycle/{id}', [ProfileController::class, 'update_motorcycle']) ->name('update_motorcycle');
+
+route::get('/add_motorcycle', [ProfileController::class, 'add_motorcycle']) ->name('add_motorcycle');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/save_motorcycle', [ProfileController::class, 'save_motorcycle'])->name('save_motorcycle');
+});
+
+route::get('/delete_motorcycle/{id}', [ProfileController::class, 'delete_motorcycle']) ->name('delete_motorcycle');
 
 
 //TipsController
@@ -33,6 +56,8 @@ route::post('/update_inspection_tips/{id}', [TipsController::class, 'update_insp
 route::get('/delete_inspection_tips/{id}', [TipsController::class, 'delete_inspection_tips']) ->name('delete_inspection_tips');
 
 route::get('/inspection_tips_details/{id}', [TipsController::class, 'inspection_tips_details']) ->name('inspection_tips_details');
+
+
 
 //BookingController
 route::get('/service_booking', [BookingController::class, 'service_booking']) ->name('service_booking');
