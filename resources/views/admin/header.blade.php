@@ -1,4 +1,4 @@
-    <header class="header">
+<header class="header">
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
@@ -13,14 +13,34 @@
 
             <!-- Log out               -->
 
-            <div class="list-inline-item logout">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-link nav-link" style="padding:0; color:inherit;">
-                        <i class="fa fa-sign-out"></i> Logout
-                    </button>
-                </form>
-            </div>
+            @auth
+                <div class="list-inline-item logout">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link" style="padding: 3px; margin: 2px; background-color:red; color:white;">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </button>
+                    </form>
+                </div>
+            @else
+                <div class="list-inline-item login">
+                    <form method="GET" action="{{ route('login') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link login-button" style="padding: 3px; margin: 2px; background-color:green; color:white;">
+                            <i class="fa fa-sign-in"></i> Login
+                        </button>
+                    </form>
+                </div>
+
+                <div class="list-inline-item register">
+                    <form method="GET" action="{{ route('register') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link nav-link register-button" style="padding: 3px; margin: 2px; background-color:blue; color:white;">
+                            <i class="fa fa-user-plus"></i> Register
+                        </button>
+                    </form>
+                </div>
+            @endauth
           </div>
         </div>
       </nav>

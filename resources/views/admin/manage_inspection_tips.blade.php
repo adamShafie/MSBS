@@ -50,14 +50,12 @@
 
     <div class="page-content">
       <div class="container-fluid py-4">
-        <h2 class="h5 mb-4">Manage Inspection Tips</h2>
-        <div class="card" style="border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            <div class="card-body" style="padding: 1.5rem;">
+        <h3 style="color: black; font-weight: 600; margin-bottom: 20px;">Manage Inspection Tips</h3>
             <div class="table-responsive">
               <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 0.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <thead>
                   <tr class="text-center" style="border-bottom: 2px solid #dee2e6;">
-                    <th style="width:60px;">No</th>
+                    <th style="width:60px;">ID</th>
                     <th style="width:200px;">Title</th>
                     <th>Content</th>
                     <th style="width:120px;">Image</th>
@@ -95,7 +93,6 @@
               </a>
             </div>
           </div>
-        </div>
       </div>
     </div>
 

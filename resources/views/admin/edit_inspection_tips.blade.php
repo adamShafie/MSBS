@@ -40,7 +40,7 @@
 
     <div class="page-content">
       <div class="container-fluid py-4">
-        <h2 class="h5 mb-4">Edit Inspection Tip</h2>
+        <h3 style="color: #000; font-weight: 600; margin-bottom: 20px;">Edit Inspection Tip</h3>
         <div class="row justify-content-center">
           <div class="col-lg-7 col-md-9">
             <div class="card">
@@ -67,7 +67,7 @@
                     <input type="file" name="thumbnail" id="thumbnail" class="form-control" style="border: none;">
                   </div>
                   <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-block"><b>Edit Tip</b></button>
+                    <button type="submit" class="btn btn-primary btn-block"><b>Update</b></button>
                   </div>
                 </form>
               </div>

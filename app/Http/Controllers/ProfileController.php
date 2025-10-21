@@ -13,7 +13,15 @@ class ProfileController extends Controller
     {
         if (Auth::id()) {
             $user = User::find(Auth::id());
-            return view('home.user_profile', compact('user'));
+            if ($user->role == 'admin') {
+                return view('admin.user_profile', compact('user'));
+            }
+            else if ($user->role == 'workshop_owner') {
+                return view('workshop_owner.user_profile', compact('user'));
+            }
+            else {
+                return view('home.user_profile', compact('user'));
+            }
         } else {
             return redirect()->route('login');
         }
@@ -22,7 +30,15 @@ class ProfileController extends Controller
     public function edit_profile($id)
     {
         $user = User::find($id);
-        return view('home.edit_profile', compact('user'));
+        if ($user->role == 'admin') {
+            return view('admin.edit_profile', compact('user'));
+        }
+        else if ($user->role == 'workshop_owner') {
+            return view('workshop_owner.edit_profile', compact('user'));
+        }
+        else {
+            return view('home.edit_profile', compact('user'));
+        }
     }
 
     public function update_profile(Request $request, $id)

@@ -76,6 +76,12 @@ class TipsController extends Controller
         return redirect()->back()->with('success', 'Inspection tip updated successfully.');
     }
 
+    public function view_inspection_tips()
+    {
+        $tips = InspectionTips::all();
+        return view('home.inspection_tips', compact('tips'));
+    }
+
     public function inspection_tips_details($id)
     {
         $tip = InspectionTips::find($id);

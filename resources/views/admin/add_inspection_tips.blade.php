@@ -39,7 +39,7 @@
 
     <div class="page-content">
       <div class="container-fluid py-4">
-        <h2 class="h5 mb-4">Add Inspection Tip</h2>
+        <h3 style="color: #000; font-weight: 600; margin-bottom: 20px;">Add Inspection Tip</h3>
         <div class="row justify-content-center">
           <div class="col-lg-7 col-md-9">
             <div class="card">

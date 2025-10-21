@@ -55,6 +55,8 @@ route::post('/update_inspection_tips/{id}', [TipsController::class, 'update_insp
 
 route::get('/delete_inspection_tips/{id}', [TipsController::class, 'delete_inspection_tips']) ->name('delete_inspection_tips');
 
+route::get('/view_inspection_tips', [TipsController::class, 'view_inspection_tips']) ->name('view_inspection_tips');
+
 route::get('/inspection_tips_details/{id}', [TipsController::class, 'inspection_tips_details']) ->name('inspection_tips_details');
 
 
