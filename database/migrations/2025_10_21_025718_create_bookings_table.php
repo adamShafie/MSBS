@@ -13,16 +13,14 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('customer_email');
-            $table->string('customer_phone');
-            $table->string('vehicle_make');
-            $table->string('vehicle_model');
-            $table->string('vehicle_year');
-            $table->string('inspection_type');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('motorcycle_id');
+            $table->string('service_type');
             $table->date('preferred_date');
-            $table->time('preferred_time');
+            $table->string('remarks')->nullable();
             $table->string('status')->default('pending');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('motorcycle_id')->references('motorcycle_id')->on('motorcycles')->onDelete('cascade');
             $table->timestamps();
         });
     }

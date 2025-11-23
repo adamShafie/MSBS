@@ -14,3 +14,4 @@
     <script src="admin/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="admin/js/charts-home.js"></script>
     <script src="admin/js/front.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

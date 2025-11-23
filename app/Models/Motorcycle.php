@@ -20,4 +20,8 @@ class Motorcycle extends Model
         'engine_capacity',
         'year',
     ];
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'motorcycle_id');
+    }
 }

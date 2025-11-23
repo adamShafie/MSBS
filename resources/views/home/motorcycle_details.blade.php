@@ -146,7 +146,7 @@
                     </a>
                 </div>
                 <div class="text-end" style="align-items: right; float: right;">
-                    <a class="btn btn-info" href="{{ route('delete_motorcycle', $motorcycle->motorcycle_id) }}" style="background-color: hsla(0, 98%, 49%, 1.00);">
+                    <a class="btn btn-info" onclick="return confirm('Are you sure you want to delete this motorcycle?')" href="{{ route('delete_motorcycle', $motorcycle->motorcycle_id) }}" style="background-color: hsla(0, 98%, 49%, 1.00);">
                     <i class="fa fa-trash"></i> Delete
                     </a>
                 </div>

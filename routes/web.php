@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApprovalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TipsController;
@@ -62,4 +63,31 @@ route::get('/inspection_tips_details/{id}', [TipsController::class, 'inspection_
 
 
 //BookingController
-route::get('/service_booking', [BookingController::class, 'service_booking']) ->name('service_booking');
+Route::middleware(['auth'])->group(function () {
+route::get('/view_bookings', [BookingController::class, 'view_bookings']) ->name('view_bookings');
+
+route::get('/service_booking', [BookingController::class, 'service_booking'])->name('service_booking');
+
+route::post('/save_booking', [BookingController::class, 'save_booking'])->name('save_booking');
+
+route::get('/edit_booking/{id}', [BookingController::class, 'edit_booking']) ->name('edit_booking');
+
+route::post('/update_booking/{id}', [BookingController::class, 'update_booking']) ->name('update_booking');
+
+route::get('/delete_booking/{id}', [BookingController::class, 'delete_booking']) ->name('delete_booking');
+
+route::get('/make_payment/{id}', [BookingController::class, 'make_payment']) ->name('make_payment');
+
+Route::controller(BookingController::class)->group(function(){
+
+    Route::post('stripe/{id}', [BookingController::class, 'stripePost'])->name('stripe.post');
+});
+});
+
+
+
+//ApprovalController
+route::get('/booking_details/{id}', [ApprovalController::class, 'booking_details']) ->name('booking_details');
+route::post('/set_price/{id}', [ApprovalController::class, 'set_price']) ->name('set_price');
+route::post('/approve_booking/{id}', [ApprovalController::class, 'approve_booking']) ->name('approve_booking');
+route::get('/reject_booking/{id}', [ApprovalController::class, 'reject_booking']) ->name('reject_booking');

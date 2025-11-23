@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <base href="/public">
     @include('home.css')
-    <title>Service Booking</title>
+    <title>Edit Service Booking</title>
     <style>
         .card {
             box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
@@ -70,28 +71,26 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Motorcycle Service Booking</h4>
+                <h4 class="card-title">Edit Booking</h4>
               </div>
               <div class="card-body">
-                <form action="{{ url('save_booking')}}" method="POST">
+                <form action="{{ route('update_booking', $booking->id) }}" method="POST">
                   @csrf
                   <div class="mb-3">
                     <label for="model" class="form-label">Select Motorcycle</label>
                     <br>
                     <select class="form-select" id="motorcycle_id" name="motorcycle_id" required style="border-color: black;">
-                      <option value="" disabled selected>Select your motorcycle</option>
-                    @foreach ($motorcycles as $motorcycle)
-                      <option value="{{ $motorcycle->motorcycle_id }}">
-                        {{ $motorcycle->model }} - {{ $motorcycle->plate_number }}
-                      </option>
-                    @endforeach
+                      <option value="{{ $booking->motorcycle_id }}" selected>{{ $booking->motorcycle->model }} - {{ $booking->motorcycle->plate_number }}</option>
+                        @foreach($motorcycles as $motorcycle)
+                            <option value="{{ $motorcycle->motorcycle_id }}">{{ $motorcycle->model }} - {{ $motorcycle->plate_number }}</option>
+                        @endforeach
                     </select>
                   </div>
                   <div class="mb-3">
                     <label for="service_type" class="form-label">Service Type</label>
                     <br>
                     <select class="form-select" id="service_type" name="service_type" required style="border-color: black;">
-                      <option value="" disabled selected>Select a service type</option>
+                      <option value="{{ $booking->service_type }}" selected>{{ $booking->service_type }}</option>
                       <option value="Engine Service">Engine Service</option>
                       <option value="Lubricant & Oil Change">Lubricant & Oil Change</option>
                       <option value="Tire Change">Tire Change</option>
@@ -101,13 +100,13 @@
                   </div>
                   <div class="mb-3">
                     <label for="preferred_date" class="form-label">Preferred Date</label>
-                    <input type="date" class="form-control" id="preferred_date" name="preferred_date" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="dd-mm-yyyy">
+                    <input type="date" class="form-control" id="preferred_date" name="preferred_date" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="Enter preferred date" value="{{ \Carbon\Carbon::parse($booking->preferred_date)->format('Y-m-d') }}">
                   </div>
                   <div class="mb-3">
                     <label for="remarks" class="form-label">Remarks</label>
-                    <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;"></textarea>
+                    <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;" placeholder="Enter remarks">{{ $booking->remarks }}</textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Book Service</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
                 </form>
               </div>
             </div>

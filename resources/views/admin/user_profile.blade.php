@@ -99,7 +99,7 @@
       <section class="profile">
         <h2>User Information</h2>
             <div class="col-sm-12">
-                <a class="btn btn-info" href="{{ url('delete_profile' , Auth::user()->id) }}" style="background-color: hsla(0, 98%, 49%, 1.00); align-items: right; float: right;"><i class="fa fa-trash"></i> Delete</a>
+                <a class="btn btn-info" onclick="return confirm('Are you sure you want to delete your profile?')" href="{{ url('delete_profile' , Auth::user()->id) }}" style="background-color: hsla(0, 98%, 49%, 1.00); align-items: right; float: right;"><i class="fa fa-trash"></i> Delete</a>
             </div>
             <div class="col-md-8">
               <div class="card mb-3">

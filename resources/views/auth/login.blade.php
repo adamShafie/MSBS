@@ -51,7 +51,7 @@
                     </a>
                 @endif
 
-                <x-button class="ms-4">
+                <x-button class="bg-green-600 hover:bg-green-700 focus:ring-green-500 ms-3">
                     {{ __('Log in') }}
                 </x-button>
             </div>
@@ -61,7 +61,7 @@
         @if (Route::has('register'))
                 <div class="flex justify-center">
                     <a href="{{ route('register') }}">
-                        <x-button class="bg-green-600 hover:bg-green-700 focus:ring-green-500">
+                        <x-button class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-500">
                             {{ __('Register') }}
                         </x-button>
                     </a>
