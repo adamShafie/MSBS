@@ -90,4 +90,4 @@ Route::controller(BookingController::class)->group(function(){
 route::get('/booking_details/{id}', [ApprovalController::class, 'booking_details']) ->name('booking_details');
 route::post('/set_price/{id}', [ApprovalController::class, 'set_price']) ->name('set_price');
 route::post('/approve_booking/{id}', [ApprovalController::class, 'approve_booking']) ->name('approve_booking');
-route::get('/reject_booking/{id}', [ApprovalController::class, 'reject_booking']) ->name('reject_booking');
+route::post('/reject_booking/{id}', [ApprovalController::class, 'reject_booking']) ->name('reject_booking');

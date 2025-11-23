@@ -163,24 +163,35 @@
                     {{ ucfirst($booking->status) }}
                   </span>
                 </div>
+                @if($booking->status == 'rejected' && $booking->bookingApproval && $booking->bookingApproval->rejection_reason)
+                <div class="detail-item" style="margin-top: 10px;">
+                    <strong>Rejection Reason:</strong>
+                    <span style="color:#b91c1c; font-weight:500;">
+                        {{ $booking->bookingApproval->rejection_reason ?? 'N/A' }}
+                    </span>
+                </div>
+                @endif
+
                 @if($booking->status == 'pending')
                 <div class="mt-3" style="text-align: right">
                     <a class="btn btn-danger" style="background-color: #dc3545; border-color: #dc3545" onclick="return confirm('Are you sure you want to delete this booking?')" href="{{ route('delete_booking', $booking->id) }}"><i class="fa fa-trash"> Delete</i></a>
                     <a class="btn btn-primary" style="background-color: #007bff; border-color: #007bff" href="{{ route('edit_booking', $booking->id) }}"><i class="fa fa-edit"> Edit</i></a>
                 </div>
-                @elseif($booking->status == 'approved' && (!$booking->payment || $booking->payment->payment_status == 'pending'))
+                @endif
+
+                @if($booking->status == 'approved' && $booking->payment && $booking->payment->payment_status == 'pending')
                 <div class="mt-3" style="text-align: right">
                     <a class="btn btn-primary"
                     style="background-color: #007a12ff; border-color: #007a12ff"
                     href="{{ route('make_payment', $booking->id) }}">
-                    <i class="fa fa-dollar"></i> Make Payment
+                        <i class="fa fa-dollar"></i> Make Payment
                     </a>
                 </div>
                 @endif
 
               </div>
             </div>
-          @endforeach
+            @endforeach
         @endif
       </main>
     </div>

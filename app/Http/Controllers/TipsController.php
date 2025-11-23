@@ -27,7 +27,7 @@ class TipsController extends Controller
         }
 
         $tips->save();
-        return redirect()->back()->with('success', 'Inspection tip saved successfully.');
+        return redirect()->route('manage_inspection_tips', compact('tips'))->with('success', 'Inspection tip added successfully.');
     }
 
     public function manage_inspection_tips()

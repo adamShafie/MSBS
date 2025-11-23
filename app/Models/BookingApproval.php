@@ -8,17 +8,17 @@ class BookingApproval extends Model
 {
     protected $table = 'booking_approvals';
 
+    // If your table uses booking_id as the primary key:
+    protected $primaryKey = 'booking_id';
+    public $incrementing = false; // set true only if booking_id is auto-increment
+    protected $keyType = 'int';
+
     protected $fillable = [
-        'approval_id',
         'booking_id',
         'user_id',
         'decision',
-        'proposed_date',
         'quoted_price',
         'approved_at',
+        'rejection_reason',
     ];
-    public function booking()
-    {
-        return $this->belongsTo(Booking::class, 'booking_id');
-    }
 }

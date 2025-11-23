@@ -41,17 +41,24 @@ class ApprovalController extends Controller
     public function reject_booking(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
-        BookingApproval::updateOrCreate(
-            [
-                'booking_id' => $booking->id,
-                'user_id' => $booking->user_id,
-                'decision' => 'rejected',
-                'approved_at' => now()
-            ]
-        );
+
+        // Update booking status
         $booking->status = 'rejected';
         $booking->save();
 
-        return redirect()->route('view_bookings', $id)->with('success', 'Quoted price set successfully!');
+        // Create or update the approval record
+        BookingApproval::updateOrCreate(
+            ['booking_id' => $booking->id],
+            [
+                'user_id' => $booking->user_id,
+                'decision' => 'rejected',
+                'proposed_date' => null,
+                'quoted_price' => null,
+                'approved_at' => now(),
+                'rejection_reason' => $request->rejection_reason,
+            ]
+        );
+
+        return redirect()->route('view_bookings', $id)->with('success', 'Booking rejected successfully!');
     }
 }

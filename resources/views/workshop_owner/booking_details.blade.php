@@ -163,7 +163,7 @@
             </div>
             @if($booking->status == 'pending')
             <div class="mt-3" style="text-align: right">
-                <a class="btn btn-primary" onclick="return confirm('Are you sure you want to reject this booking?')" style="background-color: #b90000ff; border-color: #b90000ff" href="{{ route('reject_booking', $booking->id) }}"><i class="fa fa-times"> Reject</i></a>
+                <button class="btn btn-primary" style="background-color: #b90000ff; border-color: #b90000ff" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $booking->id }}"><i class="fa fa-times"> Reject</i></button>
                 <button class="btn btn-primary" style="background-color: #007a12ff; border-color: #007a12ff" data-bs-toggle="modal" data-bs-target="#setPrice{{ $booking->id }}"><i class="fa fa-dollar"> Set Price</i></button>
             </div>
             @endif
@@ -192,7 +192,7 @@
                     class="form-control"
                     min="0"
                     step="1.00"
-                    value="{{ $booking->approval->quoted_price ?? ''}}"
+                    value="{{ $booking->bookingApproval->quoted_price ?? ''}}"
                     required
                     style="margin-bottom:10px; font-weight:600; color:black;">
 
@@ -214,6 +214,40 @@
         </div>
     </div>
     </div>
+    <!-- Reject Booking Modal -->
+    <div class="modal fade" id="rejectModal{{ $booking->id }}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header" style="background:#dc3545; color:white;">
+            <h5 class="modal-title">Reject Booking</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form action="{{ route('reject_booking', $booking->id) }}" method="POST">
+            @csrf
+
+            <div class="modal-body" style="padding:20px; background-color:white; color:black; font-weight:600;">
+            <label class="form-label" style="font-weight:600;">Reason for Rejection</label>
+            <input type="text"
+                    name="rejection_reason"
+                    class="form-control"
+                    placeholder="Enter reason for rejecting the booking"
+                    required
+                    style="margin-bottom:10px; font-weight:600; color:black;">
+            </div>
+
+            <div class="modal-footer" style="background-color:white;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Confirm Reject</button>
+            </div>
+
+        </form>
+
+        </div>
+    </div>
+    </div>
+
 
     @include('workshop_owner.footer')
   </body>
