@@ -9,10 +9,9 @@
                     <li><a href="{{url('view_bookings')}}">Manage Bookings</a></li>
                   </ul>
                 </li>
-                <li @if(Request::is('view_history')) class="active" @endif><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-history"></i>Services History </a>
+                <li @if(Request::is('service_history')) class="active" @endif><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-history"></i>Services History </a>
                   <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
-                    <li><a href="{{url('#')}}">View History</a></li>
-                    <li><a href="{{url('#')}}">-</a></li>
+                    <li><a href="{{url('service_history')}}">View History</a></li>
                   </ul>
                 </li>
                 <li @if(Request::is('user_details')) class="active" @endif><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user"></i>User Profile </a>

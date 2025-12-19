@@ -194,9 +194,10 @@
                     step="1.00"
                     value="{{ $booking->bookingApproval->quoted_price ?? ''}}"
                     required
+                    placeholder="0.00"
                     style="margin-bottom:10px; font-weight:600; color:black;">
 
-            <small class="text-muted">Set the final price for this service booking.</small>
+            <small class="text-muted">Set the estimated price for this service booking.</small>
 
             </div>
 

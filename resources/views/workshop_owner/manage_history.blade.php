@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include('admin.css')
+    @include('workshop_owner.css')
     <style>
       .table thead th {
         border: 1px solid #000000ff;
@@ -43,61 +43,55 @@
         gap: 1rem; /* Adjust spacing as needed */
       }
     </style>
+
   </head>
   <body>
-    @include('admin.header')
-    @include('admin.sidebar')
-
+    @include('workshop_owner.header')
+    @include('workshop_owner.sidebar')
     <div class="page-content">
       <div class="container-fluid py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 style="color: black; font-weight: 600; margin-bottom: 20px;">Manage Inspection Tips</h3>
-            <a href="{{ url('add_inspection_tips') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New Tip</a>
-        </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 style="color: black; font-weight: 600; margin-bottom: 20px;">Manage Service History</h3>
+                <a style="background-color: #00a434ff; border-color: #00a434ff" href="{{ route('add_record') }}" class="btn btn-primary"><i class="fa fa-plus"> Add Record</i></a>
+            </div>
             <div class="table-responsive">
               <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 0.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <thead>
                   <tr class="text-center" style="border-bottom: 2px solid #dee2e6;">
                     <th style="width:60px;">ID</th>
-                    <th style="width:200px;">Title</th>
-                    <th>Content</th>
-                    <th style="width:120px;">Image</th>
-                    <th style="width:150px;">Action</th>
+                    <th style="width:150px;">Service Date</th>
+                    <th style="width:150px;">Service Type</th>
+                    <th style="width:150px;">Cost</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody>
+                  @if ($records->isEmpty())
                   <tr>
-                    @if ($tips->isEmpty())
-                      <td colspan="5">No inspection tips available.</td>
+                      <td colspan="6">No service history available.</td>
                   </tr>
-                    @endif
-                    @foreach($tips as $data)
-                    <td>{{ $data->id }}</td>
-                    <td>{{ $data->title }}</td>
-                    <td>{!! Str::limit($data->content, 50) !!}</td>
-                    <td>
-                      <img class="img-fluid" width="100" height="100" src="thumbnails/{{ $data->thumbnail }}" alt="Tip Image">
-                    </td>
+                  @endif
+                  @foreach($records as $record)
+                  <tr>
+                    <td>{{ $record->record_id }}</td>
+                    <td>{{ $record->service_date }}</td>
+                    <td>{{ $record->service_type }}</td>
+                    <td>{{ $record->final_price }}</td>
+                    <td>{{ $record->remarks }}</td>
                     <td>
                       <div class="action-buttons">
-                        <a href="{{ url('delete_inspection_tips', $data->id) }}" class="btn btn-sm btn-danger mb-1" title="Delete" onclick="return confirm('Are you sure to delete this tip?')">
-                          <i class="fa fa-trash"></i> Delete
-                        </a>
-                        <a href="{{ url('edit_inspection_tips', $data->id) }}" class="btn btn-sm btn-primary mb-1" title="Edit">
-                          <i class="fa fa-edit"></i> Edit
-                        </a>
+                        <a href="{{ url('edit_record', $record->record_id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{{ url('delete_record', $record->record_id) }}" onclick="return confirm('Are you sure you want to delete this record?')" class="btn btn-danger btn-sm">Delete</a>
                       </div>
                     </td>
                   </tr>
                   @endforeach
-                  <!-- Add more rows dynamically here -->
                 </tbody>
               </table>
             </div>
-          </div>
       </div>
     </div>
-
-    @include('admin.footer')
+    @include('workshop_owner.footer')
   </body>
 </html>

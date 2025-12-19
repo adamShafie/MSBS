@@ -19,10 +19,16 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('payments', function (Blueprint $table) {
+
+            // 1. Drop foreign key FIRST
+            $table->dropForeign(['booking_id']);
+
+            // 2. Then drop unique index
             $table->dropUnique(['booking_id']);
+
         });
     }
 };

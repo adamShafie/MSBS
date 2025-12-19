@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TipsController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceHistoryController;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 //LoginController
@@ -91,3 +92,12 @@ route::get('/booking_details/{id}', [ApprovalController::class, 'booking_details
 route::post('/set_price/{id}', [ApprovalController::class, 'set_price']) ->name('set_price');
 route::post('/approve_booking/{id}', [ApprovalController::class, 'approve_booking']) ->name('approve_booking');
 route::post('/reject_booking/{id}', [ApprovalController::class, 'reject_booking']) ->name('reject_booking');
+
+
+//ServiceHistoryController
+route::get('/service_history', [ServiceHistoryController::class, 'index']) ->name('service_history');
+route::get('/add_record', [ServiceHistoryController::class, 'add_record']) ->name('add_record');
+route::post('/save_record', [ServiceHistoryController::class, 'save_record']) ->name('save_record');
+route::get('/edit_record/{id}', [ServiceHistoryController::class, 'edit_record']) ->name('edit_record');
+route::post('/update_record/{id}', [ServiceHistoryController::class, 'update_record']) ->name('update_record');
+route::get('/delete_record/{id}', [ServiceHistoryController::class, 'delete_record']) ->name('delete_record');
