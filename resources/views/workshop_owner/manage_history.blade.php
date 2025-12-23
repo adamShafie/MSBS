@@ -2,11 +2,12 @@
 <html>
   <head>
     @include('workshop_owner.css')
+    <title>Manage Service History</title>
     <style>
       .table thead th {
         border: 1px solid #000000ff;
         border-bottom: 2px solid #000000ff;
-        background-color: #ffffffe1;
+        background-color: lightgray;
         font-weight: 600;
         vertical-align: middle;
         text-align: center;
@@ -58,11 +59,11 @@
               <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 0.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                 <thead>
                   <tr class="text-center" style="border-bottom: 2px solid #dee2e6;">
-                    <th style="width:60px;">ID</th>
-                    <th style="width:150px;">Service Date</th>
-                    <th style="width:150px;">Service Type</th>
-                    <th style="width:150px;">Cost</th>
-                    <th>Remarks</th>
+                    <th>ID</th>
+                    <th>Service Date</th>
+                    <th>Service Type</th>
+                    <th>Cost</th>
+                    <th>Motorcycle</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -78,7 +79,7 @@
                     <td>{{ $record->service_date }}</td>
                     <td>{{ $record->service_type }}</td>
                     <td>{{ $record->final_price }}</td>
-                    <td>{{ $record->remarks }}</td>
+                    <td>{{ $record->booking->motorcycle->model }}</td>
                     <td>
                       <div class="action-buttons">
                         <a href="{{ url('edit_record', $record->record_id) }}" class="btn btn-primary btn-sm">Edit</a>
