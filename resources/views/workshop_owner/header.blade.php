@@ -1,47 +1,45 @@
-    <header class="header">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-          <div class="navbar-header">
-            <!-- Navbar Header--><a href="{{ url('home') }}" class="navbar-brand">
-              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">MS</strong><strong>BS</strong></div>
-              <div class="brand-text brand-sm"><strong class="text-primary">MS</strong><strong>BS</strong></div></a>
-            <!-- Sidebar Toggle Btn-->
-            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
-          </div>
-          <div class="right-menu list-inline no-margin-bottom">
-            <div class="list-inline-item"><a href="#" class="search-open nav-link"></a></div>
+<header class="header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
 
-            <!-- Log out               -->
+      <!-- LEFT: Logo + Sidebar Toggle -->
+      <div class="d-flex align-items-center gap-3">
+        <a href="{{ url('home') }}" class="navbar-brand d-flex align-items-center">
+          <img src="{{ asset('images/MSBS-logo.png') }}"
+               alt="MSBS Logo"
+               class="brand-logo">
+        </a>
 
-            @auth
-                <div class="list-inline-item logout">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link nav-link" style="padding: 3px; margin: 2px; background-color:red; color:white;">
-                            <i class="fa fa-sign-out"></i> Logout
-                        </button>
-                    </form>
-                </div>
-            @else
-                <div class="list-inline-item login">
-                    <form method="GET" action="{{ route('login') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link nav-link login-button" style="padding: 3px; margin: 2px; background-color:green; color:white;">
-                            <i class="fa fa-sign-in"></i> Login
-                        </button>
-                    </form>
-                </div>
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
 
-                <div class="list-inline-item register">
-                    <form method="GET" action="{{ route('register') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link nav-link register-button" style="padding: 3px; margin: 2px; background-color:blue; color:white;">
-                            <i class="fa fa-user-plus"></i> Register
-                        </button>
-                    </form>
-                </div>
-            @endauth
-          </div>
-        </div>
-      </nav>
-    </header>
+      <!-- RIGHT: Auth Buttons -->
+      <div class="right-menu d-flex align-items-center gap-2">
+
+        @auth
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center gap-1" style="color: white; background-color: #ec0505ff; border-color: grey;">
+              <i class="fa fa-sign-out"></i>
+              <span class="d-none d-md-inline">Logout</span>
+            </button>
+          </form>
+        @else
+          <a href="{{ route('login') }}" class="btn btn-success btn-sm d-flex align-items-center gap-1 " style="color: white; background-color: #00720dff; border-color: grey; margin-right: 5px;">
+            <i class="fa fa-sign-in"></i>
+            <span class="d-none d-md-inline">Login</span>
+          </a>
+
+          <a href="{{ route('register') }}" class="btn btn-primary btn-sm d-flex align-items-center gap-1" style="color: white; background-color: #0044cc; border-color: grey;">
+            <i class="fa fa-user-plus"></i>
+            <span class="d-none d-md-inline">Register</span>
+          </a>
+        @endauth
+
+      </div>
+
+    </div>
+  </nav>
+</header>

@@ -76,10 +76,10 @@
                 <form action="{{ url('save_record')}}" method="POST">
                   @csrf
                   <div class="mb-3">
-                    <label for="booking_id" class="form-label">Approved Booking</label>
+                    <label for="booking_id" class="form-label">Completed service</label>
                     <br>
                     <select class="form-select" id="booking_id" name="booking_id" required style="border-color: black;">
-                      <option value="" disabled selected>Select an approved booking</option>
+                      <option value="" disabled selected>Select a completed service</option>
                     @foreach ($approvedBookings as $booking)
                       <option value="{{ $booking->id }}">
                         {{ $booking->motorcycle->model }} - {{ $booking->motorcycle->plate_number }} - {{ $booking->service_type }} (RM{{ $booking->bookingApproval->quoted_price }}) - ({{ $booking->preferred_date }})

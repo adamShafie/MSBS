@@ -64,6 +64,7 @@
                     <th>Service Type</th>
                     <th>Cost</th>
                     <th>Motorcycle</th>
+                    <th>Customer</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -79,7 +80,8 @@
                     <td>{{ $record->service_date }}</td>
                     <td>{{ $record->service_type }}</td>
                     <td>{{ $record->final_price }}</td>
-                    <td>{{ $record->booking->motorcycle->model }}</td>
+                    <td>{{ $record->booking->motorcycle->brand }} {{ $record->booking->motorcycle->model }}</td>
+                    <td>{{ $record->user->id }} - {{ $record->user->name }}</td>
                     <td>
                       <div class="action-buttons">
                         <a href="{{ url('edit_record', $record->record_id) }}" class="btn btn-primary btn-sm">Edit</a>

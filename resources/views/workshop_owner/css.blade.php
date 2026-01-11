@@ -23,6 +23,50 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 
     <style>
+        /* Default: show big logo, hide small */
+        /* Header */
+        .header {
+        background-color: #1f2933;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .navbar {
+        padding: 10px 20px;
+        }
+
+        /* Logo */
+        .brand-logo {
+        height: 42px;
+        transition: all 0.2s ease;
+        }
+
+        /* Sidebar Toggle */
+        .sidebar-toggle {
+        background: transparent;
+        border: none;
+        color: #e5e7eb;
+        font-size: 18px;
+        cursor: pointer;
+        }
+
+        .sidebar-toggle:hover {
+        color: #60a5fa;
+        }
+
+        /* Buttons */
+        .btn-sm {
+        padding: 6px 12px;
+        font-weight: 500;
+        border-radius: 6px;
+        }
+
+        /* Mobile tweak */
+        @media (max-width: 768px) {
+        .brand-logo {
+            height: 34px;
+        }
+        }
+
         .page-content {
             padding: 20px;
             min-height: 100vh;

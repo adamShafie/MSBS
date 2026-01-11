@@ -9,7 +9,7 @@
                     <li><a href="{{url('add_inspection_tips')}}">Add Inspection Tips</a></li>
                   </ul>
                 </li>
-                <li @if(Request::is('user_details')) class="active" @endif><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user"></i>Profile Management </a>
+                <li @if(Request::is('user_details')) class="active" @endif><a href="#exampledropdownDropdown4" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-user"></i>User Profile </a>
                   <ul id="exampledropdownDropdown4" class="collapse list-unstyled ">
                     <li><a href="{{url('user_details')}}">User Details</a></li>
                   </ul>
