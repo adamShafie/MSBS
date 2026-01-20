@@ -96,50 +96,40 @@
 
     <div class="page-content">
     <main>
-      <section class="profile">
-        <h2>User Information</h2>
-            <div class="col-sm-12">
-                <a class="btn btn-info" onclick="return confirm('Are you sure you want to delete your profile?')" href="{{ url('delete_profile' , Auth::user()->id) }}" style="background-color: hsla(0, 98%, 49%, 1.00); align-items: right; float: right;"><i class="fa fa-trash"></i> Delete</a>
+        <section class="profile">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">User Information</h2>
+            <div>
+                <a href="{{ route('edit_profile', Auth::user()->id) }}" class="btn btn-warning me-2">
+                    <i class="fa fa-edit me-1"></i> Edit
+                </a>
+                <a href="{{ url('delete_profile', Auth::user()->id) }}"
+                onclick="return confirm('Are you sure you want to delete your profile?')"
+                class="btn btn-danger" style="background-color: red; border-color: red;">
+                    <i class="fa fa-trash me-1"></i> Delete
+                </a>
             </div>
-            <div class="col-md-8">
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      <b class="text-muted">{{Auth::user()->name}}</b>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <b class="text-muted">{{Auth::user()->email}}</b>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone Number</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <b class="text-muted">{{Auth::user()->phone}}</b>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <a class="btn btn-info " href="{{ route('edit_profile' , Auth::user()->id) }}" style="align-items: right; float: right;"><i class="fa fa-edit"></i> Edit</a>
-                    </div>
-                  </div>
+        </div>
+
+        <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-3 fw-bold" style="color: black; font-weight: bold;">Full Name</div>
+                    <div style="color: black;">{{ Auth::user()->name }}</div>
                 </div>
-              </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 fw-bold" style="color: black; font-weight: bold;">Email</div>
+                    <div style="color: black;">{{ Auth::user()->email }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 fw-bold" style="color: black; font-weight: bold;">Phone Number</div>
+                    <div style="color: black;">{{ Auth::user()->phone }}</div>
+                </div>
             </div>
-      </section>
+        </div>
+    </div>
+    </section>
     </main>
     </div>
 

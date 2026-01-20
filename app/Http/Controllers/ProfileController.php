@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Motorcycle;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -86,15 +87,28 @@ class ProfileController extends Controller
     }
     public function update_motorcycle(Request $request, $id)
     {
-        $motorcycle = Motorcycle::find($id);
-        $motorcycle->plate_number = $request->input('plate_number');
-        $motorcycle->brand = $request->input('brand');
-        $motorcycle->model = $request->input('model');
-        $motorcycle->engine_capacity = $request->input('engine_capacity');
-        $motorcycle->year = $request->input('year');
-        $motorcycle->save();
+        // Find the motorcycle record or fail
+        $motorcycle = Motorcycle::findOrFail($id);
 
-        return redirect()->route('view_motorcycle');
+        // Validate input with uniqueness check for plate_number
+        $validated = $request->validate([
+            'plate_number' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('motorcycles', 'plate_number')->ignore($motorcycle->id),
+            ],
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'engine_capacity' => 'required|integer',
+            'year' => 'required|integer',
+        ]);
+
+        // Update record with validated data
+        $motorcycle->update($validated);
+
+        // Redirect back with success message
+        return redirect()->route('view_motorcycle')->with('success', 'Motorcycle updated successfully!');
     }
 
     public function add_motorcycle()
@@ -105,16 +119,24 @@ class ProfileController extends Controller
     public function save_motorcycle(Request $request)
     {
         if (Auth::id()) {
+            $validated = $request->validate([
+                'plate_number' => 'required|string|max:255|unique:motorcycles,plate_number',
+                'brand' => 'required|string|max:255',
+                'model' => 'required|string|max:255',
+                'engine_capacity' => 'required|integer',
+                'year' => 'required|integer',
+            ]);
+
             $motorcycle = new Motorcycle();
             $motorcycle->user_id = Auth::id();
-            $motorcycle->plate_number = $request->input('plate_number');
-            $motorcycle->brand = $request->input('brand');
-            $motorcycle->model = $request->input('model');
-            $motorcycle->engine_capacity = $request->input('engine_capacity');
-            $motorcycle->year = $request->input('year');
+            $motorcycle->plate_number = $validated['plate_number'];
+            $motorcycle->brand = $validated['brand'];
+            $motorcycle->model = $validated['model'];
+            $motorcycle->engine_capacity = $validated['engine_capacity'];
+            $motorcycle->year = $validated['year'];
             $motorcycle->save();
 
-            return redirect()->route('view_motorcycle');
+            return redirect()->route('view_motorcycle')->with('success', 'Motorcycle added successfully!');
         } else {
             return redirect()->route('login');
         }

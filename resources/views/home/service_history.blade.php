@@ -23,71 +23,82 @@
         font-size: 0.95rem;
         color: #000000ff;
         text-align: center;
-    }
-      .table img {
-        border-radius: 0.5rem;
       }
-      .table tbody td .btn {
-        color: #fff !important;
+      .badge-service {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 6px;
       }
-      .table tbody td .btn-primary {
-        background-color: #007bff !important;
-        border-color: #007bff !important;
-      }
-      .table tbody td .btn-danger {
-        background-color: #dc3545 !important;
-        border-color: #dc3545 !important;
-      }
-      .action-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem; /* Adjust spacing as needed */
-      }
+      .badge-maintenance { background-color: #e0f2fe; color: #0c4a6e; }
+      .badge-repair { background-color: #fee2e2; color: #991b1b; }
     </style>
-
   </head>
   <body>
     @include('home.header')
     @include('home.sidebar')
 
     <div class="page-content">
-    <div class="container-fluid py-4">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-              <h3 style="color: black; font-weight: 600; margin-bottom: 20px;">Service History</h3>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 0.25rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-              <thead>
-                <tr class="text-center" style="border-bottom: 2px solid #dee2e6;">
-                  <th>ID</th>
-                  <th>Service Date</th>
-                  <th>Service Type</th>
-                  <th>Motorcycle</th>
-                  <th>Remarks</th>
-                  <th>Total Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                @if ($records->isEmpty())
-                <tr>
-                    <td colspan="6">No service history available.</td>
-                </tr>
-                @endif
-                @foreach($records as $record)
-                <tr>
-                  <td>{{ $record->record_id }}</td>
-                  <td>{{ $record->service_date }}</td>
-                  <td>{{ $record->service_type }}</td>
-                  <td>{{ $record->booking->motorcycle->brand }} {{ $record->booking->motorcycle->model }}</td>
-                  <td>{{ $record->remarks }}</td>
-                  <td>{{ $record->final_price }}</td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </div>
+      <div class="container-fluid py-4">
+        <div class="mb-4">
+          <h3 style="color: black; font-weight: 600;">Service History</h3>
+        </div>
+
+        <!-- Search bar below heading -->
+        <div class="mb-4">
+          <form action="{{ route('service_history') }}" method="GET" class="d-flex" style="max-width: 500px;">
+            <input type="text" name="search" class="form-control me-2"
+                   placeholder="Search by date, motorcycle, service type..."
+                   value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary" style="background-color: blue; border-color: blue; margin-left: 10px;">Search</button>
+          </form>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle mb-0 shadow-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Service Date</th>
+                <th>Time Slot</th>
+                <th>Service Type</th>
+                <th>Cost</th>
+                <th>Motorcycle</th>
+                <th>Customer</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if ($records->isEmpty())
+              <tr>
+                <td colspan="8" class="text-center text-muted">
+                  No service history available.<br>
+                </td>
+              </tr>
+              @endif
+
+              @foreach($records as $record)
+              <tr>
+                <td>{{ $record->record_id }}</td>
+                <td>{{ \Carbon\Carbon::parse($record->service_date)->format('d-m-Y') }}</td>
+                <td>{{ $record->booking->time_slot }}</td>
+                <td>
+                  <span class="badge-service
+                    {{ strtolower($record->service_type) == 'maintenance' ? 'badge-maintenance' : 'badge-repair' }}">
+                    {{ ucfirst($record->service_type) }}
+                  </span>
+                </td>
+                <td>RM {{ number_format($record->final_price, 2) }}</td>
+                <td>{{ $record->booking->motorcycle->brand }} {{ $record->booking->motorcycle->model }} ({{ $record->booking->motorcycle->plate_number }})</td>
+                <td>{{ $record->user->name }} (ID: {{ $record->user->id }})</td>
+                <td>{{ $record->remarks ?? 'N/A' }}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  @include('home.footer')
+
+    @include('home.footer')
   </body>
 </html>

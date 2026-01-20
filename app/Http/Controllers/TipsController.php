@@ -30,12 +30,20 @@ class TipsController extends Controller
         return redirect()->route('manage_inspection_tips', compact('tips'))->with('success', 'Inspection tip added successfully.');
     }
 
-    public function manage_inspection_tips()
+    public function manage_inspection_tips(Request $request)
     {
-        $tips = InspectionTips::all();
+        $query = InspectionTips::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+        }
+
+        $tips = $query->latest()->paginate(5); // ✅ 10 per page
+
         return view('admin.manage_inspection_tips', compact('tips'));
     }
-
     public function edit_inspection_tips($id)
     {
         $tip = InspectionTips::find($id);
@@ -76,9 +84,19 @@ class TipsController extends Controller
         return redirect()->back()->with('success', 'Inspection tip updated successfully.');
     }
 
-    public function view_inspection_tips()
+    public function view_inspection_tips(Request $request)
     {
-        $tips = InspectionTips::all();
+        $query = InspectionTips::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+        }
+
+        // ✅ Use paginate instead of get()
+        $tips = $query->latest()->paginate(4); // 6 tips per page
+
         return view('home.inspection_tips', compact('tips'));
     }
 

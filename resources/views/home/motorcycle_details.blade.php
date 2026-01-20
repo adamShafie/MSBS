@@ -98,64 +98,58 @@
 
     <div class="page-content">
     <main>
-      <section class="profile">
-        <h2>Motorcycle Information</h2>
-            <div class="col-sm-12">
-                <a class="btn btn-info" href="{{ url('add_motorcycle') }}" style="background-color: #009b17ff; align-items: right; float: right;"><i class="fa fa-plus"></i> Add</a>
+        <section class="profile">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Motorcycle Information</h2>
+            <a class="btn btn-success" href="{{ url('add_motorcycle') }}" style=" background-color: green; border-color: green;">
+                <i class="fa fa-plus me-1"></i> Add Motorcycle
+            </a>
+        </div>
+
+        @if(count($motorcycles) == 0)
+            <div class="alert alert-info col-md-8">
+                <i class="fa fa-info-circle me-1"></i> Please add your motorcycle details.
             </div>
-            @if(count($motorcycles) == 0)
-            <div class="col-md-8">
-                <h4>Please add your motorcycle details.</h4>
-            </div>
-            @endif
-            <div class="col-md-8">
+        @endif
+
+        <div class="col-md-8">
             @foreach($motorcycles as $motorcycle)
             <div class="card mb-4">
                 <div class="card-body">
-                <h3 class="mb-3"><strong>Motorcycle {{ $loop->iteration }}</strong></h3>
-                <hr>
+                    <h4 class="mb-3">
+                        <span class="badge bg-primary me-2">#{{ $loop->iteration }}</span>
+                        {{ $motorcycle->brand }} {{ $motorcycle->model }}
+                    </h4>
 
-                <div class="row mb-2">
-                    <div class="col-sm-4"><strong>Plate Number</strong></div>
-                    <div class="col-sm-8" style="color: black;">{{ $motorcycle->plate_number }}</div>
-                </div>
-                <hr>
-                <div class="row mb-2">
-                    <div class="col-sm-4"><strong>Brand</strong></div>
-                    <div class="col-sm-8" style="color: black;">{{ $motorcycle->brand }}</div>
-                </div>
-                <hr>
-                <div class="row mb-2">
-                    <div class="col-sm-4"><strong>Model</strong></div>
-                    <div class="col-sm-8" style="color: black;">{{ $motorcycle->model }}</div>
-                </div>
-                <hr>
-                <div class="row mb-2">
-                    <div class="col-sm-4"><strong>Engine Capacity</strong></div>
-                    <div class="col-sm-8" style="color: black;">{{ $motorcycle->engine_capacity }} cc</div>
-                </div>
-                <hr>
-                <div class="row mb-3">
-                    <div class="col-sm-4"><strong>Year</strong></div>
-                    <div class="col-sm-8" style="color: black;">{{ $motorcycle->year }}</div>
-                </div>
-                <hr>
-                <div class="text-end" style="align-items: right; float: right; margin-left: 5px;">
-                    <a class="btn btn-info" href="{{ route('edit_motorcycle', $motorcycle->motorcycle_id) }}">
-                    <i class="fa fa-edit"></i> Edit
-                    </a>
-                </div>
-                <div class="text-end" style="align-items: right; float: right;">
-                    <a class="btn btn-info" onclick="return confirm('Are you sure you want to delete this motorcycle?')" href="{{ route('delete_motorcycle', $motorcycle->motorcycle_id) }}" style="background-color: hsla(0, 98%, 49%, 1.00);">
-                    <i class="fa fa-trash"></i> Delete
-                    </a>
-                </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-bold">Plate Number</div>
+                        <div class="col-md-8 text-dark">{{ $motorcycle->plate_number }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-bold">Engine Capacity</div>
+                        <div class="col-md-8 text-dark">{{ $motorcycle->engine_capacity }} cc</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-bold">Year</div>
+                        <div class="col-md-8 text-dark">{{ $motorcycle->year }}</div>
+                    </div>
+
+                    <div class="justify-content-end d-flex mt-4">
+                        <a class="btn btn-warning" href="{{ route('edit_motorcycle', $motorcycle->motorcycle_id) }}">
+                            <i class="fa fa-edit me-1"></i> Edit
+                        </a>
+                        <a class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete this motorcycle?')"
+                        href="{{ route('delete_motorcycle', $motorcycle->motorcycle_id) }}" style=" background-color: red; border-color: red; margin-left: 10px;">
+                            <i class="fa fa-trash me-1"></i> Delete
+                        </a>
+                    </div>
                 </div>
             </div>
             @endforeach
-            </div>
+        </div>
     </section>
-    </main>
+</main>
     </div>
 
     @include('home.footer')

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Make Payment</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
     <style>
@@ -45,43 +44,40 @@
 
 <div class="payment-card">
 
-    <h3 class="text-center fw-bold mb-3">Payment</h3>
-
-    <p class="text-center">
-        You need to pay:
-        <strong class="text-success">RM {{ $booking_approval->quoted_price }}</strong>
-    </p>
-
-    <hr>
+    <!-- ✅ Back button at the top -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold mb-0">Card Payment</h3>
+        <a href="{{ route('view_bookings') }}" class="btn btn-secondary btn-sm">
+            ← Back
+        </a>
+    </div>
 
     <form id="payment-form" action="{{ route('stripe.post', $booking->id) }}" method="POST">
         @csrf
 
-        <input type="hidden" name="amount" value="{{ $booking_approval->quoted_price }}">
+        <!-- Amount input -->
+        <div class="mb-3">
+            <label class="fw-semibold mb-2">Enter Amount (RM)</label>
+            <input type="number" name="amount" class="form-control" min="1" step="0.01"
+                   value="{{ $booking_approval->quoted_price ?? '' }}" required>
+        </div>
 
+        <!-- Stripe card element -->
         <label class="fw-semibold mb-2">Card Details</label>
         <div id="card-element" class="stripe-element"></div>
-
         <div id="card-errors" class="text-danger mt-2"></div>
 
         <button class="btn-pay mt-4" id="submit-button">
-            Pay RM {{ $booking_approval->quoted_price }}
+            Pay Now
         </button>
-
     </form>
-
 </div>
 
 <script src="https://js.stripe.com/v3/"></script>
-
 <script>
     const stripe = Stripe("{{ env('STRIPE_KEY') }}");
-
     const elements = stripe.elements();
-    const cardElement = elements.create("card", {
-        hidePostalCode: true
-    });
-
+    const cardElement = elements.create("card", { hidePostalCode: true });
     cardElement.mount("#card-element");
 
     const form = document.getElementById("payment-form");
@@ -107,9 +103,7 @@
             hiddenField.setAttribute("type", "hidden");
             hiddenField.setAttribute("name", "payment_method_id");
             hiddenField.setAttribute("value", paymentMethod.id);
-
             form.appendChild(hiddenField);
-
             form.submit();
         }
     });

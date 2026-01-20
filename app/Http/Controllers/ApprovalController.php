@@ -18,27 +18,39 @@ class ApprovalController extends Controller
     public function set_price(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
+
+        $request->validate([
+            'quoted_price' => 'required|numeric|min:0',
+        ]);
+
+        // ✅ Correct use of updateOrCreate
         BookingApproval::updateOrCreate(
+            ['booking_id' => $booking->id], // search criteria
             [
-                'booking_id' => $booking->id,
                 'user_id' => $booking->user_id,
                 'quoted_price' => $request->quoted_price,
                 'decision' => 'approved',
-                'approved_at' => now()
+                'approved_at' => now(),
             ]
         );
-        Payment::create([
-            'booking_id' => $booking->id,
-            'paid_amount' => 0.00,
-            'transaction_ref' => 'PENDING',
-            'payment_status' => 'PENDING',
-            'payment_date' => null,
-        ]);
+
+        // ✅ Generate unique transaction_ref
+        Payment::updateOrCreate(
+            ['booking_id' => $booking->id], // search criteria
+            [
+                'paid_amount' => 0.00,
+                'transaction_ref' => uniqid('PAY-'), // always unique
+                'payment_status' => 'pending',
+                'payment_date' => null,
+            ]
+        );
+
         $booking->status = 'approved';
         $booking->save();
-        return redirect()->route('view_bookings', $id)->with('success', 'Quoted price set successfully!');
+
+        return redirect()->route('view_bookings')->with('success', 'Quoted price set successfully!');
     }
-    public function reject_booking(Request $request, $id)
+        public function reject_booking(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
 

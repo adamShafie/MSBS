@@ -98,60 +98,97 @@
         <div class="col-md-8">
           <div class="card mb-3">
             <div class="card-body">
-              <form action="{{ url('update_motorcycle', $motorcycle->motorcycle_id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('update_motorcycle', $motorcycle->motorcycle_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Plate Number</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" name="plate_number" value="{{ $motorcycle->plate_number }}" class="form-control" style="color: black;"/>
-                  </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Plate Number</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" name="plate_number"
+                            value="{{ old('plate_number', $motorcycle->plate_number) }}"
+                            class="form-control @error('plate_number') is-invalid @enderror"
+                            style="color: black;" />
+                        @error('plate_number')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Brand</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" name="brand" value="{{ $motorcycle->brand }}" class="form-control" style="color: black;"/>
-                  </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Brand</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" name="brand"
+                            value="{{ old('brand', $motorcycle->brand) }}"
+                            class="form-control @error('brand') is-invalid @enderror"
+                            style="color: black;" />
+                        @error('brand')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Model</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" name="model" value="{{ $motorcycle->model }}" class="form-control" style="color: black;"/>
-                  </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Model</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" name="model"
+                            value="{{ old('model', $motorcycle->model) }}"
+                            class="form-control @error('model') is-invalid @enderror"
+                            style="color: black;" />
+                        @error('model')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Engine Capacity (cc)</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" name="engine_capacity" value="{{ $motorcycle->engine_capacity }}" class="form-control" style="color: black;"/>
-                  </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Engine Capacity (cc)</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" name="engine_capacity"
+                            value="{{ old('engine_capacity', $motorcycle->engine_capacity) }}"
+                            class="form-control @error('engine_capacity') is-invalid @enderror"
+                            style="color: black;" />
+                        @error('engine_capacity')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h6 class="mb-0">Year</h6>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" name="year" value="{{ $motorcycle->year }}" class="form-control" style="color: black;"/>
-                  </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Year</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <input type="text" name="year"
+                            value="{{ old('year', $motorcycle->year) }}"
+                            class="form-control @error('year') is-invalid @enderror"
+                            style="color: black;" />
+                        @error('year')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <hr>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                  </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ url('motorcycle_details') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                        <i class="fa fa-times me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">Update
+                    </button>
                 </div>
-              </form>
-            </div>
+            </form>
+        </div>
           </div>
         </div>
       </section>

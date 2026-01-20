@@ -79,6 +79,10 @@ route::get('/delete_booking/{id}', [BookingController::class, 'delete_booking'])
 
 route::get('/make_payment/{id}', [BookingController::class, 'make_payment']) ->name('make_payment');
 
+Route::get('/my-bookings', [BookingController::class, 'view_bookings']) ->name('my_bookings');
+
+Route::get('/available-slots', [BookingController::class, 'getAvailableSlots'])->name('available_slots');
+
 Route::controller(BookingController::class)->group(function(){
 
     Route::post('stripe/{id}', [BookingController::class, 'stripePost'])->name('stripe.post');

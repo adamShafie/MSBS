@@ -13,6 +13,7 @@ class Booking extends Model
         'motorcycle_id',
         'service_type',
         'preferred_date',
+        'time_slot',
         'remarks',
         'status',
     ];

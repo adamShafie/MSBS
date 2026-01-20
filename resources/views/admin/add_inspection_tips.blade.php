@@ -60,10 +60,14 @@
                     <label class="form-label" for="thumbnail">Upload Image</label>
                     <input type="file" name="thumbnail" id="thumbnail" class="form-control" style="border: none;">
                     <div class="invalid-feedback">Please upload an image.</div>
-                  </div>
-                  <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-block"><b>Create Tip</b></button>
-                  </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ route('manage_inspection_tips') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                            <i class="fa fa-times me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary"><b>Create Tip</b></button>
+                    </div>
                 </form>
               </div>
             </div>

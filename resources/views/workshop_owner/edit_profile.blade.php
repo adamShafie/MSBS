@@ -2,7 +2,7 @@
 <html>
   <head>
     <base href="/public">
-    @include('home.css')
+    @include('workshop_owner.css')
     <title>User Profile</title>
     <style>
         body{
@@ -88,42 +88,73 @@
     </style>
   </head>
   <body>
-    @include('home.header')
-    @include('home.sidebar')
+    @include('workshop_owner.header')
+    @include('workshop_owner.sidebar')
 
     <div class="page-content">
     <main>
-      <section class="profile">
+        <section class="profile">
         <h2>Update Profile</h2>
         <div class="col-md-8">
-          <div class="card mb-3">
-            <div class="card-body">
-              <form action="{{url('update_profile' , $user->id)}}" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
-                @csrf
-                <div class="mb-3">
-                  <label class="form-label" for="name"><h6 style="color: black;">Full Name</h6></label>
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" value="{{$user->name}}" required style="color: black;" autofocus>
-                  <div class="invalid-feedback">Please enter your name.</div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="email"><h6 style="color: black;">Email</h6></label>
-                  <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" value="{{$user->email}}" required style="color: black;"/>
-                  <div class="invalid-feedback">Please enter a valid email address.</div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="phone"><h6 style="color: black;">Phone Number</h6></label>
-                  <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter your phone number" value="{{$user->phone}}" required style="color: black;"/>
-                  <div class="invalid-feedback">Please enter your phone number.</div>
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-              </form>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form action="{{ url('update_profile', $user->id) }}" method="post" class="needs-validation" novalidate>
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold" style="color: black; font-weight: bold;">Full Name</label>
+                            <input type="text" name="name" id="name"
+                                class="form-control @error('name') is-invalid @enderror"
+                                placeholder="Enter your name"
+                                value="{{ old('name', $user->name) }}" required autofocus style="border-color: black; color: black;">
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @else
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold" style="color: black; font-weight: bold;">Email</label>
+                            <input type="email" name="email" id="email"
+                                class="form-control @error('email') is-invalid @enderror"
+                                placeholder="Enter your email"
+                                value="{{ old('email', $user->email) }}" required style="border-color: black; color: black;">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @else
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-bold" style="color: black; font-weight: bold;">Phone Number</label>
+                            <input type="text" name="phone" id="phone"
+                                class="form-control @error('phone') is-invalid @enderror"
+                                placeholder="Enter your phone number"
+                                value="{{ old('phone', $user->phone) }}" required style="border-color: black; color: black;">
+                            @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @else
+                                <div class="invalid-feedback">Please enter your phone number.</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ route('view_profile') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                            <i class="fa fa-times me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save me-1"></i> Save
+                        </button>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
-      </section>
+        </section>
     </main>
     </div>
 
-    @include('home.footer')
+    @include('workshop_owner.footer')
   </body>
 </html>

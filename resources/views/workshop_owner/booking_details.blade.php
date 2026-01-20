@@ -116,6 +116,9 @@
       <main class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h2 class="page-title">Booking Details</h2>
+          <div class="d-flex gap-2">
+            <a href="{{ route('view_bookings') }}" class="btn btn-secondary btn-sm">Back</a>
+          </div>
         </div>
 
         <div class="card">
@@ -151,6 +154,11 @@
             </div>
 
             <div class="detail-item">
+              <strong>Preferred Time:</strong>
+              {{ $booking->time_slot }}
+            </div>
+
+            <div class="detail-item">
               <strong>Remarks:</strong>
               {{ $booking->remarks ?? '-' }}
             </div>
@@ -161,6 +169,19 @@
                 {{ ucfirst($booking->status) }}
               </span>
             </div>
+
+            @if($booking->status == 'rejected')
+            <div class="detail-item">
+              <strong>Rejection Reason:</strong>
+              {{ $booking->bookingApproval->rejection_reason ?? '-' }}
+            </div>
+            @elseif($booking->status == 'approved')
+            <div class="detail-item">
+              <strong>Estimated Price:</strong>
+              {{ $booking->bookingApproval->quoted_price ? 'RM ' . number_format($booking->bookingApproval->quoted_price, 2) : '-' }}
+            </div>
+            @endif
+
             @if($booking->status == 'pending')
             <div class="mt-3" style="text-align: right">
                 <button class="btn btn-primary" style="background-color: #b90000ff; border-color: #b90000ff" data-bs-toggle="modal" data-bs-target="#rejectModal{{ $booking->id }}"><i class="fa fa-times"> Reject</i></button>

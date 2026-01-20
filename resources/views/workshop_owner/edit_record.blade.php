@@ -39,18 +39,6 @@
             outline: 0;
             box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
         }
-        .form-select {
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            color: #495057;
-        }
-        .form-select:focus {
-            border-color: #80bdff;
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-        }
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
@@ -58,6 +46,12 @@
         .btn-primary:hover {
             background-color: #0069d9;
             border-color: #0062cc;
+        }
+        .readonly-box {
+            border: 1px solid #000;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
         }
     </style>
   </head>
@@ -76,34 +70,52 @@
               <div class="card-body">
                 <form action="{{ url('update_record', $record->record_id) }}" method="POST">
                   @csrf
+
+                  <!-- ✅ Paid booking details (read-only) -->
                   <div class="mb-3">
-                    <label for="booking_id" class="form-label">Completed service</label>
-                    <br>
-                    <select class="form-select" id="booking_id" name="booking_id" required style="border-color: black;">
-                      <option value="" disabled selected>Select a completed service</option>
-                    @foreach ($approvedBookings as $booking)
-                      <option value="{{ $booking->id }}" @if($booking->id == $record->booking_id) selected @endif>
-                        {{ $booking->motorcycle->model }} - {{ $booking->motorcycle->plate_number }} - {{ $booking->service_type }} (RM{{ $booking->bookingApproval->quoted_price }}) - ({{ $booking->preferred_date }})
-                      </option>
-                    @endforeach
-                    </select>
+                    <label class="form-label">Paid service</label>
+                    <div class="readonly-box">
+                      {{ $record->booking->motorcycle->model }} -
+                      {{ $record->booking->motorcycle->plate_number }} -
+                      {{ $record->booking->service_type }}
+                      (RM{{ $record->booking->bookingApproval->quoted_price ?? 'N/A' }})
+                      - {{ $record->booking->preferred_date }} ({{ $record->booking->time_slot }})
+                      - Customer: {{ $record->booking->user->name }}
+                    </div>
+                    <!-- Hidden booking_id so it’s submitted -->
+                    <input type="hidden" name="booking_id" value="{{ $record->booking_id }}">
                   </div>
 
                   <div class="mb-3">
                     <label for="service_date" class="form-label">Service Date</label>
-                    <input type="date" class="form-control" id="service_date" name="service_date" value="{{ $record->service_date }}" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="dd-mm-yyyy">
+                    <input type="date" class="form-control" id="service_date" name="service_date"
+                           value="{{ $record->service_date }}" required style="max-width: 210px;">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="time_slot" class="form-label">Time Slot</label>
+                    <input type="text" class="form-control" id="time_slot" name="time_slot"
+                           value="{{ $record->booking->time_slot }}" required style="max-width: 210px;">
                   </div>
 
                   <div class="mb-3">
                     <label for="final_price" class="form-label">Final Price (RM)</label>
-                    <input type="number" class="form-control" id="final_price" name="final_price" value="{{ $record->final_price }}" required style="color: black; border-color: black; max-width: 210px;" placeholder="Enter final price" step="1.00" min="1.00">
+                    <input type="number" class="form-control" id="final_price" name="final_price"
+                           value="{{ $record->final_price }}" required style="max-width: 210px;" step="1.00" min="1.00">
                   </div>
 
                   <div class="mb-3">
                     <label for="remarks" class="form-label">Remarks</label>
-                    <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;">{{ $record->remarks }}</textarea>
+                    <textarea class="form-control" id="remarks" name="remarks" rows="3">{{ $record->remarks }}</textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Update</button>
+
+                  <!-- ✅ Buttons -->
+                  <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ route('service_history') }}" class="btn btn-secondary" style="background-color: grey; border-color: grey; margin-right: 10px;">
+                      <i class="fa fa-times me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -111,6 +123,7 @@
         </div>
       </div>
     </div>
+
     @include('workshop_owner.footer')
   </body>
 </html>

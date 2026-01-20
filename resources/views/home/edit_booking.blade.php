@@ -98,16 +98,55 @@
                       <option value="Other">Other</option>
                     </select>
                   </div>
-                  <div class="mb-3">
+                    <div class="mb-3">
                     <label for="preferred_date" class="form-label">Preferred Date</label>
-                    <input type="date" class="form-control" id="preferred_date" name="preferred_date" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="Enter preferred date" value="{{ \Carbon\Carbon::parse($booking->preferred_date)->format('Y-m-d') }}">
-                  </div>
+                    <input type="date" name="preferred_date" id="preferred_date"
+                        class="form-control" value="{{ $booking->preferred_date }}" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;">
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="time_slot" class="form-label">Preferred Time Slot</label>
+                    <br>
+                    <select name="time_slot" id="time_slot" class="form-select" required style="border-color: black;">
+                        <option value="{{ $booking->time_slot }}" selected>{{ $booking->time_slot }}</option>
+                        @foreach($availableSlots as $slot)
+                            <option value="{{ $slot }}">{{ $slot }}</option>
+                        @endforeach
+                    </select>
+                    </div>
                   <div class="mb-3">
                     <label for="remarks" class="form-label">Remarks</label>
                     <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;" placeholder="Enter remarks">{{ $booking->remarks }}</textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Update</button>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ route('view_bookings') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                            <i class="fa fa-times me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">Update
+                        </button>
                 </form>
+                <script>
+                    document.getElementById('preferred_date').addEventListener('change', function() {
+                        let date = this.value;
+                        let bookingId = "{{ $booking->id }}";
+
+                        fetch(`/available-slots?date=${date}&booking_id=${bookingId}`)
+                            .then(response => response.json())
+                            .then(slots => {
+                                let slotSelect = document.getElementById('time_slot');
+                                slotSelect.innerHTML = '';
+                                slots.forEach(slot => {
+                                    let option = document.createElement('option');
+                                    option.value = slot;
+                                    option.textContent = slot;
+                                    if (slot === "{{ $booking->time_slot }}") {
+                                        option.selected = true; // keep current slot selected
+                                    }
+                                    slotSelect.appendChild(option);
+                                });
+                            });
+                    });
+                </script>
               </div>
             </div>
           </div>

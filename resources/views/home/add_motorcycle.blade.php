@@ -98,42 +98,93 @@
         <div class="col-md-8">
           <div class="card mb-3">
             <div class="card-body">
-              <form action="{{ route('save_motorcycle') }}" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+
+            {{-- Global error list (optional, can keep or remove) --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('save_motorcycle') }}" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
                 @csrf
+
                 <div class="mb-3">
-                  <label class="form-label" for="plate_number">Plate Number</label>
-                  <input type="text" name="plate_number" id="plate_number" class="form-control" placeholder="Enter plate number" required>
-                  <div class="invalid-feedback">Please enter the plate number.</div>
+                    <label class="form-label" for="plate_number">Plate Number</label>
+                    <input type="text" name="plate_number" id="plate_number"
+                        class="form-control @error('plate_number') is-invalid @enderror"
+                        placeholder="Enter plate number" value="{{ old('plate_number') }}" required>
+                    @error('plate_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div class="invalid-feedback">Please enter the plate number.</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="brand">Brand</label>
-                  <input type="text" name="brand" id="brand" class="form-control" placeholder="Enter brand" required>
-                  <div class="invalid-feedback">Please enter the brand.</div>
+                    <label class="form-label" for="brand">Brand</label>
+                    <input type="text" name="brand" id="brand"
+                        class="form-control @error('brand') is-invalid @enderror"
+                        placeholder="Enter brand" value="{{ old('brand') }}" required>
+                    @error('brand')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div class="invalid-feedback">Please enter the brand.</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="model">Model</label>
-                  <input type="text" name="model" id="model" class="form-control" placeholder="Enter model" required>
-                  <div class="invalid-feedback">Please enter the model.</div>
+                    <label class="form-label" for="model">Model</label>
+                    <input type="text" name="model" id="model"
+                        class="form-control @error('model') is-invalid @enderror"
+                        placeholder="Enter model" value="{{ old('model') }}" required>
+                    @error('model')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div class="invalid-feedback">Please enter the model.</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="engine_capacity">Engine Capacity (cc)</label>
-                  <input type="number" name="engine_capacity" id="engine_capacity" class="form-control" placeholder="Enter engine capacity" required>
-                  <div class="invalid-feedback">Please enter the engine capacity.</div>
+                    <label class="form-label" for="engine_capacity">Engine Capacity (cc)</label>
+                    <input type="number" name="engine_capacity" id="engine_capacity"
+                        class="form-control @error('engine_capacity') is-invalid @enderror"
+                        placeholder="Enter engine capacity" value="{{ old('engine_capacity') }}" required>
+                    @error('engine_capacity')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div class="invalid-feedback">Please enter the engine capacity.</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="year">Year</label>
-                  <input type="number" name="year" id="year" class="form-control" placeholder="Enter year" required>
-                  <div class="invalid-feedback">Please enter the year.</div>
+                    <label class="form-label" for="year">Year</label>
+                    <input type="number" name="year" id="year"
+                        class="form-control @error('year') is-invalid @enderror"
+                        placeholder="Enter year" value="{{ old('year') }}" required>
+                    @error('year')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div class="invalid-feedback">Please enter the year.</div>
+                    @enderror
                 </div>
+
                 <hr>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary">Add</button>
-                  </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ route('motorcycle_details') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                        <i class="fa fa-times me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save me-1"></i> Save
+                    </button>
                 </div>
-              </form>
+            </form>
             </div>
-          </div>
+      </div>
         </div>
       </section>
     </main>

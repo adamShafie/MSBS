@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id('payment_id');
             $table->unsignedBigInteger('booking_id');
-            $table->string('transaction_ref')->unique();
+            $table->string('transaction_ref')->unique()->nullable();
             $table->decimal('paid_amount', 10, 2);
             $table->enum('payment_status', ['pending', 'completed', 'failed'])->default('pending');
             $table->timestamp('payment_date')->nullable();

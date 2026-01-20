@@ -75,34 +75,56 @@
               <div class="card-body">
                 <form action="{{ url('save_record')}}" method="POST">
                   @csrf
-                  <div class="mb-3">
-                    <label for="booking_id" class="form-label">Completed service</label>
+                <div class="mb-3">
+                    <label for="booking_id" class="form-label">Paid service</label>
                     <br>
                     <select class="form-select" id="booking_id" name="booking_id" required style="border-color: black;">
-                      <option value="" disabled selected>Select a completed service</option>
-                    @foreach ($approvedBookings as $booking)
-                      <option value="{{ $booking->id }}">
-                        {{ $booking->motorcycle->model }} - {{ $booking->motorcycle->plate_number }} - {{ $booking->service_type }} (RM{{ $booking->bookingApproval->quoted_price }}) - ({{ $booking->preferred_date }})
-                      </option>
+                    <option value="" disabled selected>Select a paid booking</option>
+                    @foreach ($paidBookings as $booking)
+                        <option value="{{ $booking->id }}"
+                                data-price="{{ $booking->bookingApproval->quoted_price ?? '' }}"
+                                data-date="{{ $booking->preferred_date }}"
+                                data-slot="{{ $booking->time_slot }}">
+                            {{ $booking->motorcycle->model }} -
+                            {{ $booking->motorcycle->plate_number }} -
+                            {{ $booking->service_type }}
+                            (RM{{ $booking->bookingApproval->quoted_price ?? 'N/A' }})
+                            - {{ $booking->preferred_date }}
+                            ({{ $booking->time_slot }})
+                            - Customer: {{ $booking->user->name }}
+                        </option>
                     @endforeach
                     </select>
-                  </div>
+                </div>
 
                   <div class="mb-3">
                     <label for="service_date" class="form-label">Service Date</label>
-                    <input type="date" class="form-control" id="service_date" name="service_date" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="dd-mm-yyyy">
+                    <input type="date" class="form-control" id="service_date" name="service_date" required style="border-color: black; max-width: 210px;" placeholder="dd-mm-yyyy">
                   </div>
 
                   <div class="mb-3">
+                        <label for="time_slot" class="form-label">Time Slot</label>
+                        <input type="text" class="form-control" id="time_slot" name="time_slot"
+                            required style="max-width: 210px;" placeholder="Auto-filled time slot">
+                  </div>
+
+
+                  <div class="mb-3">
                     <label for="final_price" class="form-label">Final Price (RM)</label>
-                    <input type="number" class="form-control" id="final_price" name="final_price" required style="color: black; border-color: black; max-width: 210px;" placeholder="Enter final price" step="1.00" min="1.00">
+                    <input type="number" class="form-control" id="final_price" name="final_price"
+                    required style="max-width: 210px;" placeholder="Enter final price" step="1.00" min="1.00">
                   </div>
 
                   <div class="mb-3">
                     <label for="remarks" class="form-label">Remarks</label>
                     <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Create</button>
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ route('service_history') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                        <i class="fa fa-times me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
                 </form>
               </div>
             </div>
@@ -111,5 +133,30 @@
       </div>
     </div>
     @include('workshop_owner.footer')
+
+    <script>
+        document.getElementById('booking_id').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+
+            // ✅ Autofill Final Price
+            const priceMatch = selectedOption.text.match(/\(RM(\d+(\.\d+)?)\)/);
+            if (priceMatch) {
+                document.getElementById('final_price').value = priceMatch[1];
+            }
+
+            // ✅ Autofill Service Date
+            // Assuming preferred_date is printed in YYYY-MM-DD format in the option text
+            const dateMatch = selectedOption.text.match(/(\d{4}-\d{2}-\d{2})/);
+            if (dateMatch) {
+                document.getElementById('service_date').value = dateMatch[1];
+            }
+            // Autofill Time Slot
+            const slot = selectedOption.getAttribute('data-slot');
+            if (slot) {
+                document.getElementById('time_slot').value = slot;
+            }
+        });
+    </script>
+
   </body>
 </html>

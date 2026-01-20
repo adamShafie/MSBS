@@ -99,16 +99,51 @@
                       <option value="Other">Other</option>
                     </select>
                   </div>
-                  <div class="mb-3">
+                    <div class="mb-3">
                     <label for="preferred_date" class="form-label">Preferred Date</label>
-                    <input type="date" class="form-control" id="preferred_date" name="preferred_date" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;" placeholder="dd-mm-yyyy">
-                  </div>
-                  <div class="mb-3">
+                    <input type="date" name="preferred_date" id="preferred_date"
+                        class="form-control" value="{{ $date }}" required min="{{ date('Y-m-d') }}" style="border-color: black; max-width: 210px;">
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="time_slot" class="form-label">Preferred Time Slot</label>
+                    <br>
+                    <select name="time_slot" id="time_slot" class="form-select" required style="border-color: black;">
+                        <option value="">-- Select a Time Slot --</option>
+                        @foreach($availableSlots as $slot)
+                            <option value="{{ $slot }}">{{ $slot }}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                <div class="mb-3">
                     <label for="remarks" class="form-label">Remarks</label>
                     <textarea class="form-control" id="remarks" name="remarks" rows="3" style="color: black;"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Book Service</button>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{{ route('view_bookings') }}" class="btn btn-secondary" style=" background-color: grey; border-color: grey; margin-right: 10px;">
+                            <i class="fa fa-times me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">Book Service
+                        </button>
+                    </div>
                 </form>
+                <script>
+                document.getElementById('preferred_date').addEventListener('change', function() {
+                    let date = this.value;
+                    fetch(`/available-slots?date=${date}`)
+                        .then(response => response.json())
+                        .then(slots => {
+                            let slotSelect = document.getElementById('time_slot');
+                            slotSelect.innerHTML = '<option value="">-- Select a Time Slot --</option>';
+                            slots.forEach(slot => {
+                                let option = document.createElement('option');
+                                option.value = slot;
+                                option.textContent = slot;
+                                slotSelect.appendChild(option);
+                            });
+                        });
+                });
+                </script>
               </div>
             </div>
           </div>
